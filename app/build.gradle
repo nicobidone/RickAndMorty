@@ -1,0 +1,77 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+apply from: "$rootDir/buildsystem/jacoco.gradle"
+
+preBuild.dependsOn ktlintFormat
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.example.myteam"
+        minSdk 23
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+}
+
+kapt {
+    correctErrorTypes true
+}
+
+hilt {
+    enableAggregatingTask = true
+}
+
+dependencies {
+    implementation project(path: ':di')
+    implementation project(path: ':domain')
+
+    implementation base.core
+    implementation base.appcompat
+    implementation base.material
+    implementation base.constraintlayout
+    implementation base.legacy_support
+    implementation base.lifecycle_livedata
+    implementation base.lifecycle_viewmodel
+
+    implementation base.hilt
+    kapt base.hilt_kapt
+
+    implementation presentation.nav_fragment
+    implementation presentation.nav_ui
+
+    testImplementation base_test.junit
+    androidTestImplementation base_test.junit_ext
+    androidTestImplementation base_test.espresso
+}

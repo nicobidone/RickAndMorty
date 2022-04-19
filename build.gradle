@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    allprojects {
+        apply from: "$rootDir/buildsystem/dependencies.gradle"
+        apply from: "$rootDir/buildsystem/ktlint.gradle"
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:${versions.gradle}"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:${versions.kotlin}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:${versions.hilt}"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.nav}"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

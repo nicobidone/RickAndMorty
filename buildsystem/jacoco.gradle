@@ -1,0 +1,71 @@
+apply plugin: 'jacoco'
+jacoco {
+    toolVersion = "0.8.5"
+}
+project.afterEvaluate {
+
+    // Grab all build types and product flavors
+    def buildTypes = android.buildTypes.collect { type -> type.name }
+    def productFlavors = android.productFlavors.collect { flavor -> flavor.name }
+
+    // When no product flavors defined, use empty
+    if (!productFlavors) productFlavors.add('')
+    productFlavors.each { productFlavorName ->
+        buildTypes.each { buildTypeName ->
+            def sourceName
+            if (!productFlavorName) {
+                sourceName = "${buildTypeName}"
+            } else {
+                sourceName = "${productFlavorName}${buildTypeName.capitalize()}"
+            }
+            def taskName = sourceName.capitalize()
+            def testTaskName = "test${taskName}UnitTest"
+            def classDirectoriesConfig = fileTree(
+                    dir: "${project.buildDir}/tmp/kotlin-classes",
+                    includes: [
+                            '**/*ViewModel.*',
+                            '**/*UseCase.*',
+                            '**/*RepositoryImpl.*',
+                            '**/*DataSourceImpl.*',
+                            '**/*CacheImpl.*'
+                    ]
+            )
+            def coverageSourceDirs = [
+                    "src/main/java",
+                    "src/$productFlavorName/java",
+                    "src/$buildTypeName/java"
+            ]
+
+            // Create coverage task of form 'testFlavorTypeCoverage' depending on 'testFlavorTypeUnitTest'
+            task "report${taskName}Coverage"(type: JacocoReport, dependsOn: "$testTaskName") {
+                group = "Reporting"
+                description = "Generate Jacoco coverage reports on the ${taskName} build."
+                classDirectories.setFrom([classDirectoriesConfig])
+                additionalSourceDirs.setFrom([files(coverageSourceDirs)])
+                sourceDirectories.setFrom([files(coverageSourceDirs)])
+                executionData.setFrom([files("${project.buildDir}/jacoco/${testTaskName}.exec")])
+                reports {
+                    xml.enabled = true
+                    html.enabled = true
+                }
+            }
+            
+            // Create check coverage task of form 'testFlavorTypeCoverage' depending on 'testFlavorTypeUnitTest'
+            task "check${taskName}Coverage"(type: JacocoCoverageVerification, dependsOn: "$testTaskName") {
+                group = "Verification"
+                description = "Checks Jacoco coverage on the ${taskName} build."
+                classDirectories.setFrom([classDirectoriesConfig])
+                additionalSourceDirs.setFrom([files(coverageSourceDirs)])
+                sourceDirectories.setFrom([files(coverageSourceDirs)])
+                executionData.setFrom([files("${project.buildDir}/jacoco/${testTaskName}.exec")])
+                violationRules {
+                    rule {
+                        limit {
+                            minimum = 0.00
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
