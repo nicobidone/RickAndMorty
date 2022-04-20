@@ -38,6 +38,9 @@ dependencies {
     implementation project(path: ':data')
     implementation project(path: ':domain')
 
+    implementation domain.serialization
+    implementation domain.serialization_converter
+    implementation data.okhttp
     implementation data.interceptor
 
     implementation base.hilt

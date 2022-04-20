@@ -70,6 +70,7 @@ dependencies {
 
     implementation presentation.nav_fragment
     implementation presentation.nav_ui
+    implementation presentation.glide
 
     testImplementation base_test.junit
     androidTestImplementation base_test.junit_ext
