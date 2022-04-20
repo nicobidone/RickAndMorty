@@ -20,6 +20,11 @@ class CharacterRepositoryImpl @Inject constructor(
                 when (this) {
                     is ServiceResult.Success -> {
                         characterDao.insertAll(*this.data.map { it.mapToCharacterDataBaseEntity() }.toTypedArray())
+                        characterDao.insertAll(*this.data.map { it.mapToLocationDBEntity() }.toTypedArray())
+                        characterDao.insertAll(*this.data.map { it.mapToOriginDBEntity() }.toTypedArray())
+                        this.data.map { episodeList ->
+                            characterDao.insertAll(*episodeList.episode.map { it.mapToEpisodeDBEntity(episodeList.id ?: 0) }.toTypedArray())
+                        }
                         characterDao.getAll().map { it.mapToCharacterEntity() }
                     }
                     else -> emptyList()

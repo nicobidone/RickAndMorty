@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.data.local.CharacterDBEntity
 import com.example.data.local.CharacterDao
-import com.example.data.local.CharacterDataBaseEntity
+import com.example.data.local.EpisodeDBEntity
+import com.example.data.local.LocationDBEntity
+import com.example.data.local.OriginDBEntity
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +20,16 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object LocalClient {
 
-    @Database(entities = [CharacterDataBaseEntity::class], version = 1, exportSchema = false)
+    @Database(
+        entities = [
+            CharacterDBEntity::class,
+            LocationDBEntity::class,
+            OriginDBEntity::class,
+            EpisodeDBEntity::class
+        ],
+        version = 4,
+        exportSchema = false
+    )
     abstract class AppDatabase : RoomDatabase() {
 
         abstract fun getCharacterDao(): CharacterDao

@@ -40,6 +40,7 @@ dependencies {
 
     implementation data.retrofit
     implementation data.room
+    kapt data.room_kapt
     implementation data.coroutines
 
     implementation domain.serialization

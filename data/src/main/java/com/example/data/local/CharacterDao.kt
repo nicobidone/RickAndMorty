@@ -5,22 +5,33 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 
 @Dao
 interface CharacterDao {
 
-    @Query("SELECT * FROM CharacterDataBaseEntity")
-    fun getAll(): List<CharacterDataBaseEntity>
+    @Transaction
+    @Query("SELECT * FROM CharacterDBEntity")
+    fun getAll(): List<CharacterData>
 
-    @Query("SELECT * FROM CharacterDataBaseEntity WHERE id IN (:userIds)")
-    fun loadAllByIds(userIds: IntArray): List<CharacterDataBaseEntity>
+    @Query("SELECT * FROM CharacterDBEntity WHERE id IN (:userIds)")
+    fun loadAllByIds(userIds: IntArray): List<CharacterDBEntity>
 
-    @Query("SELECT * FROM CharacterDataBaseEntity WHERE id == :charId")
-    fun findById(charId: String): CharacterDataBaseEntity
+    @Query("SELECT * FROM CharacterDBEntity WHERE id == :charId")
+    fun findById(charId: String): CharacterDBEntity
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg users: CharacterDataBaseEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAll(vararg users: CharacterDBEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAll(vararg users: LocationDBEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAll(vararg users: OriginDBEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAll(vararg users: EpisodeDBEntity)
 
     @Delete
-    fun delete(user: CharacterDataBaseEntity)
+    fun delete(user: CharacterDBEntity)
 }
