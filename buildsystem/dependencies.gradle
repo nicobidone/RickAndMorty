@@ -19,7 +19,9 @@ ext {
             retrofit               : "2.9.0",
             okhttp                 : "4.7.2",
             glide                  : "4.13.0",
-            coroutines             : "1.6.1"
+            coroutines             : "1.6.1",
+            room                   : "2.4.2"
+
     ]
 
     base = [
@@ -48,6 +50,9 @@ ext {
             okhttp     : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
             interceptor: "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
             coroutines : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}",
+            // room
+            room       : "androidx.room:room-ktx:${versions.room}",
+            room_kapt  : "androidx.room:room-compiler:${versions.room}"
     ]
 
     domain = [

@@ -39,9 +39,11 @@ dependencies {
     implementation project(path: ':domain')
 
     implementation data.retrofit
+    implementation data.room
     implementation data.coroutines
 
     implementation domain.serialization
+
 
     implementation base.hilt
     kapt base.hilt_kapt

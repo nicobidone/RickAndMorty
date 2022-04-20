@@ -40,8 +40,11 @@ dependencies {
 
     implementation domain.serialization
     implementation domain.serialization_converter
+
     implementation data.okhttp
     implementation data.interceptor
+    implementation data.room
+    kapt data.room_kapt
 
     implementation base.hilt
     kapt base.hilt_kapt

@@ -1,8 +1,8 @@
 package com.example.data.remote.service
 
-import com.example.data.remote.model.CharacterModel
 import com.example.data.remote.ServiceResult
 import com.example.data.remote.api.CharacterApi
+import com.example.data.remote.model.CharacterModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
