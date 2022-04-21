@@ -1,4 +1,4 @@
-package com.example.di
+package com.example.di.client
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module

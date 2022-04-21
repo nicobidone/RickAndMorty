@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.data.local.CharacterDBEntity
-import com.example.data.local.CharacterDao
-import com.example.data.local.EpisodeDBEntity
-import com.example.data.local.LocationDBEntity
-import com.example.data.local.OriginDBEntity
+import com.example.data.local.dao.CharacterDao
+import com.example.data.local.entity.CharacterDBEntity
+import com.example.data.local.entity.EpisodeDBEntity
+import com.example.data.local.entity.LocationDBEntity
+import com.example.data.local.entity.OriginDBEntity
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

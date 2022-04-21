@@ -14,9 +14,16 @@ class MainViewModel @Inject constructor(private val useCase: CharacterUseCase) :
 
     val charactersLiveData by lazy { MutableLiveData<List<CharacterEntity>>() }
 
+    private var page = 1
+    private var lastPage = 2
+
     fun getCharacters() {
         viewModelScope.launch {
-            charactersLiveData.value = useCase.getCharacters()
+            with(useCase.getCharacters(page)) {
+                if (page <= lastPage) charactersLiveData.value = this.data
+                page++
+                if (this.finalPage > 0) lastPage = this.finalPage
+            }
         }
     }
 }

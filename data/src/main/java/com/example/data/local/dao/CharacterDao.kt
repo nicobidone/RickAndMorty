@@ -1,11 +1,15 @@
-package com.example.data.local
+package com.example.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.example.data.local.entity.CharacterDBEntity
+import com.example.data.local.entity.CharacterData
+import com.example.data.local.entity.EpisodeDBEntity
+import com.example.data.local.entity.LocationDBEntity
+import com.example.data.local.entity.OriginDBEntity
 
 @Dao
 interface CharacterDao {
@@ -13,9 +17,6 @@ interface CharacterDao {
     @Transaction
     @Query("SELECT * FROM CharacterDBEntity")
     fun getAll(): List<CharacterData>
-
-    @Query("SELECT * FROM CharacterDBEntity WHERE id IN (:userIds)")
-    fun loadAllByIds(userIds: IntArray): List<CharacterDBEntity>
 
     @Query("SELECT * FROM CharacterDBEntity WHERE id == :charId")
     fun findById(charId: String): CharacterDBEntity
@@ -31,7 +32,4 @@ interface CharacterDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(vararg users: EpisodeDBEntity)
-
-    @Delete
-    fun delete(user: CharacterDBEntity)
 }

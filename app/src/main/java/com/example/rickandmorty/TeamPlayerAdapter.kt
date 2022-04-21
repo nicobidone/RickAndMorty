@@ -10,9 +10,14 @@ import com.example.domain.entity.CharacterEntity
 import com.example.rickandmorty.databinding.ItemCharacterBinding
 
 class CharacterAdapter(
-    private val list: List<CharacterEntity>,
+    private var list: List<CharacterEntity> = listOf(),
     private val action: (CharacterEntity) -> Unit
 ) : RecyclerView.Adapter<CharacterViewHolder>() {
+
+    fun setData(playerList: List<CharacterEntity>) {
+        list = playerList.toMutableList()
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         holder.bind(list[position], action)

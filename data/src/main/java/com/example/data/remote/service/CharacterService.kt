@@ -10,11 +10,17 @@ import javax.inject.Inject
 
 class CharacterService @Inject constructor(private val retrofit: Retrofit) {
 
-    suspend fun getCharacters(): ServiceResult<List<CharacterModel>> {
+    suspend fun getCharacters(nextPageNumber: Int): ServiceResult<Pair<List<CharacterModel>, Pair<Int, Int>>> {
         val api = retrofit.create(CharacterApi::class.java)
         return try {
             withContext(Dispatchers.IO) {
-                ServiceResult.Success(api.listCharacters().results?.toList() ?: emptyList())
+                val result = api.listCharacters(nextPageNumber)
+                ServiceResult.Success(
+                    Pair(
+                        result.results?.toList() ?: emptyList(),
+                        Pair(result.info?.next?.substringAfter("=")?.toInt() ?: 0, result.info?.pages?.toInt() ?: 0)
+                    )
+                )
             }
         } catch (e: Exception) {
             ServiceResult.Error(e.toString())

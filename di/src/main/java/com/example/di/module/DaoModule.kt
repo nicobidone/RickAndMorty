@@ -1,6 +1,6 @@
-package com.example.di
+package com.example.di.module
 
-import com.example.data.local.CharacterDao
+import com.example.data.local.dao.CharacterDao
 import com.example.di.LocalClient.AppDatabase
 import dagger.Module
 import dagger.Provides

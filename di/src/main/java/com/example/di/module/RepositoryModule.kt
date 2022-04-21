@@ -1,4 +1,4 @@
-package com.example.di
+package com.example.di.module
 
 import com.example.data.repository.CharacterRepositoryImpl
 import com.example.domain.repository.CharacterRepository
