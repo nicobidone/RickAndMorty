@@ -23,11 +23,6 @@ class MainFragment : Fragment() {
     private lateinit var rvAdapter: CharacterAdapter
     private val viewModel: MainViewModel by viewModels()
 
-    private var isScrolling = false
-    private var currentItems = 0
-    private var totalItems = 0
-    private var scrolledItems = 0
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
@@ -56,6 +51,12 @@ class MainFragment : Fragment() {
     }
 
     private fun scrollListener() = object : RecyclerView.OnScrollListener() {
+
+        private var isScrolling = false
+        private var currentItems = 0
+        private var totalItems = 0
+        private var scrolledItems = 0
+
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)

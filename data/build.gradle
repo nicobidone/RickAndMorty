@@ -45,7 +45,9 @@ dependencies {
 
     implementation domain.serialization
 
-
     implementation base.hilt
     kapt base.hilt_kapt
+
+    testImplementation test.junit
+    testImplementation test.mockk
 }

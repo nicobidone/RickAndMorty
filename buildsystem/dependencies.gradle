@@ -1,6 +1,6 @@
 ext {
     versions = [
-            gradle                 : "7.1.1",
+            gradle                 : "7.2.0",
             kotlin                 : "1.6.10",
             core                   : "1.6.0",
             legacy_support         : "1.0.0",
@@ -20,7 +20,9 @@ ext {
             okhttp                 : "4.7.2",
             glide                  : "4.13.0",
             coroutines             : "1.6.1",
-            room                   : "2.4.2"
+            room                   : "2.4.2",
+            mockk                  : "1.12.2",
+            core_testing           : "2.1.0"
 
     ]
 
@@ -60,9 +62,12 @@ ext {
             serialization_converter: "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${versions.serialization_converter}"
     ]
 
-    base_test = [
-            junit    : "junit:junit:${versions.junit}",
-            junit_ext: "androidx.test.ext:junit:${versions.junit_ext}",
-            espresso : "androidx.test.espresso:espresso-core:${versions.espresso}"
+    test = [
+            junit          : "junit:junit:${versions.junit}",
+            junit_ext      : "androidx.test.ext:junit:${versions.junit_ext}",
+            espresso       : "androidx.test.espresso:espresso-core:${versions.espresso}",
+            mockk          : "io.mockk:mockk:${versions.mockk}",
+            core_testing   : "androidx.arch.core:core-testing:${versions.core_testing}",
+            coroutines_test: "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutines}"
     ]
 }

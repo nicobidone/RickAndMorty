@@ -72,7 +72,8 @@ dependencies {
     implementation presentation.nav_ui
     implementation presentation.glide
 
-    testImplementation base_test.junit
-    androidTestImplementation base_test.junit_ext
-    androidTestImplementation base_test.espresso
+    testImplementation test.junit
+    testImplementation test.mockk
+    testImplementation test.core_testing
+    testImplementation test.coroutines_test
 }
