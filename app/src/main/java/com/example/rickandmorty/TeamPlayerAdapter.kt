@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.domain.entity.CharacterEntity
 import com.example.rickandmorty.databinding.ItemCharacterBinding
 
@@ -32,8 +33,10 @@ class CharacterViewHolder(itemRvBinding: View) : RecyclerView.ViewHolder(itemRvB
             Glide.with(itemView)
                 .load(data.image)
                 .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .placeholder(R.drawable.character_image_placeholder)
                 .into(ivCharacterPicture)
+            clCharacter.setOnClickListener { action(data) }
         }
     }
 }

@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.entity.CharacterEntity
+import com.example.rickandmorty.MainFragmentDirections.Companion.toDetailFragment
 import com.example.rickandmorty.databinding.FragmentMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +21,7 @@ class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private val viewModel: MainViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -32,7 +35,9 @@ class MainFragment : Fragment() {
     private fun characterObserver() = Observer<List<CharacterEntity>> {
         binding.rvMainCharacters.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = CharacterAdapter(it) {}
+            adapter = CharacterAdapter(it) {
+                findNavController().navigate(toDetailFragment(it.id))
+            }
         }
     }
 }

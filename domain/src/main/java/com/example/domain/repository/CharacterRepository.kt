@@ -5,4 +5,5 @@ import com.example.domain.entity.CharacterEntity
 interface CharacterRepository {
 
     suspend fun getCharacters(): List<CharacterEntity>
+    suspend fun getCharacter(id: Int): CharacterEntity
 }

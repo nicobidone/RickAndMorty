@@ -1,18 +1,12 @@
-package com.example.data.repository
+package com.example.data
 
-import com.example.data.local.CharacterData
 import com.example.data.local.CharacterDBEntity
+import com.example.data.local.CharacterData
 import com.example.data.local.EpisodeDBEntity
 import com.example.data.local.LocationDBEntity
 import com.example.data.local.OriginDBEntity
 import com.example.data.remote.model.CharacterModel
 import com.example.domain.entity.CharacterEntity
-
-fun CharacterModel.mapToCharacterEntity() = CharacterEntity(
-    id = this.id ?: 0,
-    name = this.name ?: "",
-    image = this.image ?: ""
-)
 
 fun CharacterModel.mapToCharacterDataBaseEntity() = CharacterDBEntity(
     id = this.id ?: 0,
@@ -29,7 +23,12 @@ fun CharacterModel.mapToCharacterDataBaseEntity() = CharacterDBEntity(
 fun CharacterDBEntity.mapToCharacterEntity() = CharacterEntity(
     id = this.id ?: 0,
     name = this.name ?: "",
-    image = this.image ?: ""
+    image = this.image ?: "",
+    species = species ?: "",
+    type = type ?: "",
+    gender = gender ?: "",
+    url = url ?: "",
+    created = created ?: ""
 )
 
 fun CharacterModel.mapToOriginDBEntity() = OriginDBEntity(
@@ -45,9 +44,14 @@ fun CharacterModel.mapToLocationDBEntity() = LocationDBEntity(
 )
 
 fun CharacterData.mapToCharacterEntity() = CharacterEntity(
-    id = this.user.id,
-    name = this.user.name,
-    image = this.user.image
+    id = this.user.id ?: 0,
+    name = this.user.name ?: "",
+    image = this.user.image ?: "",
+    species = this.user.species ?: "",
+    type = this.user.type ?: "",
+    gender = this.user.gender ?: "",
+    url = this.user.url ?: "",
+    created = this.user.created ?: ""
 )
 
 fun String.mapToEpisodeDBEntity(id: Int) = EpisodeDBEntity(
