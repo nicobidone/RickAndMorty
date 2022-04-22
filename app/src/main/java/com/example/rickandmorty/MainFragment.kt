@@ -33,7 +33,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCharacters()
+        viewModel.getInitCharacters()
         viewModel.charactersLiveData.observe(viewLifecycleOwner, characterObserver())
 
         binding.pbCharacters.visibility = View.VISIBLE

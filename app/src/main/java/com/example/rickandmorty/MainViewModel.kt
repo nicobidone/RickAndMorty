@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.entity.CharacterEntity
 import com.example.domain.usecase.CharacterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val useCase: CharacterUseCase) : ViewModel() {
@@ -16,6 +16,15 @@ class MainViewModel @Inject constructor(private val useCase: CharacterUseCase) :
 
     private var page = 1
     private var lastPage = 2
+
+    fun getInitCharacters() {
+        viewModelScope.launch {
+            with(useCase.getInitCharacters()) {
+                charactersLiveData.value = this
+                if (this.isEmpty()) getCharacters()
+            }
+        }
+    }
 
     fun getCharacters() {
         viewModelScope.launch {

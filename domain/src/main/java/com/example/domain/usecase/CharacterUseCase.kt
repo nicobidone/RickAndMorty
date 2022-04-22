@@ -8,4 +8,6 @@ class CharacterUseCase @Inject constructor(private val characterRepository: Char
     suspend fun getCharacters(page: Int) = characterRepository.getCharacters(page)
 
     suspend fun getCharacter(id: Int) = characterRepository.getCharacter(id)
+
+    suspend fun getInitCharacters() = characterRepository.getInitCharacters()
 }

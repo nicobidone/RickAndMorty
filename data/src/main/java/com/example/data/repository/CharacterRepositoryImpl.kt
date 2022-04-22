@@ -48,4 +48,8 @@ class CharacterRepositoryImpl @Inject constructor(
     override suspend fun getCharacter(id: Int): CharacterEntity = withContext(Dispatchers.IO) {
         characterDao.findById(id.toString()).mapToCharacterEntity()
     }
+
+    override suspend fun getInitCharacters() = withContext(Dispatchers.IO) {
+        characterDao.getAll().map { it.mapToCharacterEntity() }
+    }
 }

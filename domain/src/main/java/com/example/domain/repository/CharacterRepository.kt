@@ -7,4 +7,5 @@ interface CharacterRepository {
 
     suspend fun getCharacters(nextPage: Int): CharacterPageEntity
     suspend fun getCharacter(id: Int): CharacterEntity
+    suspend fun getInitCharacters(): List<CharacterEntity>
 }
