@@ -20,6 +20,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/g_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="
+            tv_character_detail_created,
+            tv_character_detail_especies,
+            tv_character_detail_gender,
+            tv_character_detail_id,
+            tv_character_detail_name" />
+
         <TextView
             android:id="@+id/tv_character_detail_name"
             android:layout_width="match_parent"
@@ -43,17 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@id/tv_character_detail_type"
-            app:layout_constraintTop_toBottomOf="@id/tv_character_detail_id"
-            tools:text="TextView" />
-
-        <TextView
-            android:id="@+id/tv_character_detail_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@id/tv_character_detail_gender"
-            app:layout_constraintTop_toBottomOf="@id/tv_character_detail_especies"
+            app:layout_constraintTop_toBottomOf="@id/tv_character_detail_id"
             tools:text="TextView" />
 
         <TextView
@@ -62,7 +64,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@id/tv_character_detail_created"
-            app:layout_constraintTop_toBottomOf="@id/tv_character_detail_type"
+            app:layout_constraintTop_toBottomOf="@id/tv_character_detail_especies"
             tools:text="TextView" />
 
         <TextView

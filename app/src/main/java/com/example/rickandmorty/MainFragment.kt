@@ -1,10 +1,12 @@
 package com.example.rickandmorty
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -38,7 +40,11 @@ class MainFragment : Fragment() {
         binding.rvMainCharacters.apply {
             layoutManager = LinearLayoutManager(context)
             rvAdapter = CharacterAdapter {
-                findNavController().navigate(toDetailFragment(it.id))
+                if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    findNavController().navigate(toDetailFragment(it.id))
+                } else {
+                    binding.fcMainDetail?.findNavController()?.navigate(R.id.to_next_detail, bundleOf("characterId" to it.id))
+                }
             }
             adapter = rvAdapter
             addOnScrollListener(scrollListener())

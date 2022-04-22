@@ -20,15 +20,15 @@ fun CharacterModel.mapToCharacterDataBaseEntity() = CharacterDBEntity(
     created = this.created ?: ""
 )
 
-fun CharacterDBEntity.mapToCharacterEntity() = CharacterEntity(
-    id = this.id ?: 0,
-    name = this.name ?: "",
-    image = this.image ?: "",
-    species = species ?: "",
-    type = type ?: "",
-    gender = gender ?: "",
-    url = url ?: "",
-    created = created ?: ""
+fun CharacterDBEntity?.mapToCharacterEntity() = CharacterEntity(
+    id = this?.id ?: 0,
+    name = this?.name ?: "",
+    image = this?.image ?: "",
+    species = this?.species ?: "",
+    type = this?.type ?: "",
+    gender = this?.gender ?: "",
+    url = this?.url ?: "",
+    created = this?.created ?: ""
 )
 
 fun CharacterModel.mapToOriginDBEntity() = OriginDBEntity(

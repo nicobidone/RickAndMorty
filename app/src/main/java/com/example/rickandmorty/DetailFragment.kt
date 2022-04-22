@@ -34,12 +34,12 @@ class DetailFragment : Fragment() {
 
     private fun characterObserver() = Observer<CharacterEntity> {
         with(binding) {
+            if (it.id == 0) binding.gDetail.visibility = View.GONE
             tvCharacterDetailId.text = it.id.toString()
             tvCharacterDetailName.text = it.name
             tvCharacterDetailCreated.text = it.created
             tvCharacterDetailEspecies.text = it.species
             tvCharacterDetailGender.text = it.gender
-            tvCharacterDetailType.text = it.type
 
             Glide.with(this@DetailFragment)
                 .load(it.image)
