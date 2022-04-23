@@ -1,8 +1,9 @@
-package com.example.rickandmorty
+package com.example.rickandmorty.feature.character
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.domain.entity.CharacterEntity
 import com.example.domain.usecase.CharacterUseCase
+import com.example.rickandmorty.BaseViewModelTest
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

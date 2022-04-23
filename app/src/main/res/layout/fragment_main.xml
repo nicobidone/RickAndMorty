@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/pb_characters"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".MainFragment"
+        tools:context=".feature.character.MainFragment"
         tools:listitem="@layout/item_character" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator

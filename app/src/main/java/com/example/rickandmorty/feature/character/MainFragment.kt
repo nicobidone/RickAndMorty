@@ -1,4 +1,4 @@
-package com.example.rickandmorty
+package com.example.rickandmorty.feature.character
 
 import android.content.Context
 import android.content.res.Configuration
@@ -15,8 +15,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.entity.CharacterEntity
-import com.example.rickandmorty.MainFragmentDirections.Companion.toDetailFragment
+import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentMainBinding
+import com.example.rickandmorty.feature.character.MainFragmentDirections.Companion.toDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

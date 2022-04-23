@@ -1,4 +1,4 @@
-package com.example.rickandmorty
+package com.example.rickandmorty.feature.character
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.domain.entity.CharacterEntity
+import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ItemCharacterBinding
 
 class CharacterAdapter(
