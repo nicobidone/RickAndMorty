@@ -1,6 +1,5 @@
 package com.example.rickandmorty.feature.character
 
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -40,9 +39,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setUpInit() {
-        activity?.getPreferences(Context.MODE_PRIVATE)?.let { sharedPref ->
-            viewModel.setInitPage(sharedPref.getInt(LAST_PAGE, resources.getInteger(R.integer.last_page_imported_default_key)))
-        }
+        viewModel.getInitCharacters()
         binding.pbCharacters.visibility = View.VISIBLE
         binding.rvMainCharacters.apply {
             layoutManager = LinearLayoutManager(context)
@@ -60,16 +57,6 @@ class MainFragment : Fragment() {
 
     private fun setUpObserver() {
         viewModel.charactersLiveData.observe(viewLifecycleOwner, characterObserver())
-        viewModel.pageLiveData.observe(viewLifecycleOwner, pageObserver())
-    }
-
-    private fun pageObserver() = Observer<Int> {
-        activity?.getPreferences(Context.MODE_PRIVATE)?.let { sharedPref ->
-            with(sharedPref.edit()) {
-                putInt(LAST_PAGE, it)
-                apply()
-            }
-        }
     }
 
     private fun characterObserver() = Observer<List<CharacterEntity>> {
@@ -103,9 +90,5 @@ class MainFragment : Fragment() {
                 binding.pbCharacters.visibility = View.VISIBLE
             }
         }
-    }
-
-    companion object {
-        private const val LAST_PAGE = "lastPageImported"
     }
 }

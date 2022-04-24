@@ -3,10 +3,10 @@ package com.example.data.remote.service
 import com.example.data.remote.ServiceResult
 import com.example.data.remote.api.CharacterApi
 import com.example.data.remote.model.CharacterModel
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
-import javax.inject.Inject
 
 class CharacterService @Inject constructor(private val retrofit: Retrofit) {
 
@@ -18,12 +18,19 @@ class CharacterService @Inject constructor(private val retrofit: Retrofit) {
                 ServiceResult.Success(
                     Pair(
                         result.results?.toList() ?: emptyList(),
-                        Pair(result.info?.next?.substringAfter("=")?.toInt() ?: 0, result.info?.pages?.toInt() ?: 0)
+                        Pair(
+                            result.info?.next?.substringAfter("=")?.toInt() ?: result.info?.pages?.toInt() ?: INVALID_PAGE,
+                            result.info?.pages?.toInt() ?: INVALID_PAGE
+                        )
                     )
                 )
             }
         } catch (e: Exception) {
             ServiceResult.Error(e.toString())
         }
+    }
+
+    companion object {
+        private const val INVALID_PAGE = 0
     }
 }

@@ -46,6 +46,8 @@ dependencies {
     implementation data.room
     kapt data.room_kapt
 
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
     implementation base.hilt
     kapt base.hilt_kapt
 }
