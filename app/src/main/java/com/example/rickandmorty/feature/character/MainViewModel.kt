@@ -13,33 +13,19 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val useCase: CharacterUseCase) : ViewModel() {
 
     val charactersLiveData by lazy { MutableLiveData<List<CharacterEntity>>() }
-    val pageLiveData by lazy { MutableLiveData<Int>() }
 
-    private var lastPage = 2
-
-    fun setInitPage(page: Int) {
-        pageLiveData.value = page
-        lastPage = page + 1
-        getInitCharacters()
-    }
-
-    private fun getInitCharacters() {
+    fun getInitCharacters() {
         viewModelScope.launch {
             with(useCase.getInitCharacters()) {
                 charactersLiveData.value = this
-                if (this.isEmpty()) getCharacters()
             }
         }
     }
 
     fun getCharacters() {
         viewModelScope.launch {
-            pageLiveData.value?.let { page ->
-                with(useCase.getCharacters(page)) {
-                    if (page <= lastPage) charactersLiveData.value = this.data
-                    pageLiveData.value = page + 1
-                    if (this.finalPage > 0) lastPage = this.finalPage
-                }
+            with(useCase.getCharacters()) {
+                charactersLiveData.value = this
             }
         }
     }

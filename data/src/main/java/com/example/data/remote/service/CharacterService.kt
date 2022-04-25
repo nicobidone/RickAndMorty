@@ -18,12 +18,20 @@ class CharacterService @Inject constructor(private val retrofit: Retrofit) {
                 ServiceResult.Success(
                     Pair(
                         result.results?.toList() ?: emptyList(),
-                        Pair(result.info?.next?.substringAfter("=")?.toInt() ?: 0, result.info?.pages?.toInt() ?: 0)
+                        Pair(
+                            result.info?.next?.substringAfter(DELIMITER)?.toInt() ?: result.info?.pages?.toInt() ?: INVALID_PAGE,
+                            result.info?.pages?.toInt() ?: INVALID_PAGE
+                        )
                     )
                 )
             }
         } catch (e: Exception) {
             ServiceResult.Error(e.toString())
         }
+    }
+
+    companion object {
+        private const val INVALID_PAGE = 0
+        private const val DELIMITER = "="
     }
 }
