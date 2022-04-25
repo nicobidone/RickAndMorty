@@ -1,7 +1,6 @@
 package com.example.rickandmorty.feature.character
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.domain.entity.CharacterPageEntity
 import com.example.domain.usecase.CharacterUseCase
 import com.example.rickandmorty.BaseViewModelTest
 import io.mockk.coEvery
@@ -22,41 +21,41 @@ class MainViewModelTest : BaseViewModelTest() {
     private val viewModel = MainViewModel(characterUseCase)
 
     @Test
-    fun `get data with success and return list`() {
+    fun `get characters success`() {
         runBlocking {
-            coEvery { characterUseCase.getCharacters(any()) } returns CharacterPageEntity(listOf(mockk()), 1, 2)
+            coEvery { characterUseCase.getCharacters() } returns listOf(mockk())
             viewModel.getCharacters()
             assert(viewModel.charactersLiveData.value.isNullOrEmpty().not())
         }
     }
 
     @Test
-    fun `get another data with success and return list`() {
+    fun `get characters error`() {
         runBlocking {
-            coEvery { characterUseCase.getCharacters(any()) } returns CharacterPageEntity(listOf(mockk()), 1, 2)
+            coEvery { characterUseCase.getCharacters() } returns emptyList()
             viewModel.getCharacters()
-            viewModel.getCharacters()
+            assert(viewModel.charactersLiveData.value.isNullOrEmpty())
+        }
+    }
+
+    @Test
+    fun `get init characters first time success`() {
+        runBlocking {
+            coEvery { characterUseCase.getInitCharacters() } returns listOf(mockk())
+
+            viewModel.getInitCharacters()
+
             assert(viewModel.charactersLiveData.value.isNullOrEmpty().not())
         }
     }
 
     @Test
-    fun `get all possible data with success and return list`() {
+    fun `get init characters first time failed`() {
         runBlocking {
-            coEvery { characterUseCase.getCharacters(any()) } returns CharacterPageEntity(listOf(mockk()), 1, 2)
-            viewModel.getCharacters()
-            coEvery { characterUseCase.getCharacters(any()) } returns CharacterPageEntity(listOf(mockk()), 2, 2)
-            viewModel.getCharacters()
-            viewModel.getCharacters()
-            assert(viewModel.charactersLiveData.value.isNullOrEmpty().not())
-        }
-    }
+            coEvery { characterUseCase.getInitCharacters() } returns emptyList()
 
-    @Test
-    fun `get no data on failed retrive list`() {
-        runBlocking {
-            coEvery { characterUseCase.getCharacters(any()) } returns CharacterPageEntity(emptyList(), 0, 0)
-            viewModel.getCharacters()
+            viewModel.getInitCharacters()
+
             assert(viewModel.charactersLiveData.value.isNullOrEmpty())
         }
     }

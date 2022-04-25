@@ -17,10 +17,10 @@ import com.example.data.remote.model.CharacterModel
 import com.example.data.remote.service.CharacterService
 import com.example.domain.entity.CharacterEntity
 import com.example.domain.repository.CharacterRepository
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class CharacterRepositoryImpl @Inject constructor(
     private val characterService: CharacterService,
@@ -39,19 +39,13 @@ class CharacterRepositoryImpl @Inject constructor(
 
         if (nextPage <= lastPage) {
             with(characterService.getCharacters(nextPage)) {
-                when (this) {
-                    is ServiceResult.Success -> {
-                        updateDataBase(this.data.first)
-                        updatePages(this.data.second)
-
-                        characterDao.getAll().map { it.mapToCharacterEntity() }
-                    }
-                    else -> characterDao.getAll().map { it.mapToCharacterEntity() }
+                if (this is ServiceResult.Success) {
+                    updateDataBase(this.data.first)
+                    updatePages(this.data.second.first,this.data.second.second)
                 }
             }
-        } else {
-            characterDao.getAll().map { it.mapToCharacterEntity() }
         }
+        characterDao.getAll().map { it.mapToCharacterEntity() }
     }
 
     private fun updateDataBase(data: List<CharacterModel>) {
@@ -63,12 +57,12 @@ class CharacterRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun updatePages(data: Pair<Int, Int>) {
-        dataStore.edit { settings -> settings[NEXT_PAGE] = data.first }
-        dataStore.edit { settings -> settings[LAST_PAGE] = data.second }
+    private suspend fun updatePages(first : Int, second : Int) {
+        dataStore.edit { settings -> settings[NEXT_PAGE] = first }
+        dataStore.edit { settings -> settings[LAST_PAGE] = second }
     }
 
-    override suspend fun getCharacter(id: Int): CharacterEntity = withContext(Dispatchers.IO) {
+    override suspend fun getCharacter(id: Int) = withContext(Dispatchers.IO) {
         characterDao.findById(id.toString()).mapToCharacterEntity()
     }
 
