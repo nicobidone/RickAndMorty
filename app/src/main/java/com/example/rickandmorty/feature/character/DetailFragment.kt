@@ -8,16 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.RequestManager
 import com.example.domain.entity.CharacterEntity
-import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
+    @Inject
+    lateinit var glideRequestManager: RequestManager
     private lateinit var binding: FragmentDetailBinding
     private val viewModel: DetailViewModel by viewModels()
     private val args: DetailFragmentArgs by navArgs()
@@ -42,12 +43,7 @@ class DetailFragment : Fragment() {
             tvCharacterDetailEspecies.text = it.species
             tvCharacterDetailGender.text = it.gender
 
-            Glide.with(this@DetailFragment)
-                .load(it.image)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.character_image_placeholder)
-                .into(ivCharacterDetailPicture)
+            glideRequestManager.loadInto(it.image, ivCharacterDetailPicture)
         }
     }
 }

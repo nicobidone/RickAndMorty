@@ -13,15 +13,19 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.RequestManager
 import com.example.domain.entity.CharacterEntity
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentMainBinding
 import com.example.rickandmorty.feature.character.MainFragmentDirections.Companion.toDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
+    @Inject
+    lateinit var glideRequestManager: RequestManager
     private lateinit var binding: FragmentMainBinding
     private lateinit var rvAdapter: CharacterAdapter
     private val viewModel: MainViewModel by viewModels()
@@ -43,7 +47,7 @@ class MainFragment : Fragment() {
         binding.pbCharacters.visibility = View.VISIBLE
         binding.rvMainCharacters.apply {
             layoutManager = LinearLayoutManager(context)
-            rvAdapter = CharacterAdapter {
+            rvAdapter = CharacterAdapter(glideRequestManager) {
                 if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     findNavController().navigate(toDetailFragment(it.id))
                 } else {

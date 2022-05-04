@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.RequestManager
 import com.example.domain.entity.CharacterEntity
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ItemCharacterBinding
 
 class CharacterAdapter(
+    private val glideRequestManager: RequestManager,
     private var list: List<CharacterEntity> = listOf(),
     private val action: (CharacterEntity) -> Unit
 ) : RecyclerView.Adapter<CharacterViewHolder>() {
@@ -21,7 +21,7 @@ class CharacterAdapter(
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.bind(list[position], action)
+        holder.bind(list[position], action, glideRequestManager)
     }
 
     override fun getItemCount() = list.size
@@ -33,15 +33,10 @@ class CharacterAdapter(
 
 class CharacterViewHolder(itemRvBinding: View) : RecyclerView.ViewHolder(itemRvBinding) {
 
-    fun bind(data: CharacterEntity, action: (CharacterEntity) -> Unit) {
+    fun bind(data: CharacterEntity, action: (CharacterEntity) -> Unit, glide: RequestManager) {
         with(ItemCharacterBinding.bind(itemView)) {
             tvCharacterName.text = data.name
-            Glide.with(itemView)
-                .load(data.image)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .placeholder(R.drawable.character_image_placeholder)
-                .into(ivCharacterPicture)
+            glide.loadInto(data.image, ivCharacterPicture)
             clCharacter.setOnClickListener { action(data) }
         }
     }

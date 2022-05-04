@@ -41,7 +41,7 @@ class CharacterRepositoryImpl @Inject constructor(
             with(characterService.getCharacters(nextPage)) {
                 if (this is ServiceResult.Success) {
                     updateDataBase(this.data.first)
-                    updatePages(this.data.second.first,this.data.second.second)
+                    updatePages(this.data.second.first, this.data.second.second)
                 }
             }
         }
@@ -57,7 +57,7 @@ class CharacterRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun updatePages(first : Int, second : Int) {
+    private suspend fun updatePages(first: Int, second: Int) {
         dataStore.edit { settings -> settings[NEXT_PAGE] = first }
         dataStore.edit { settings -> settings[LAST_PAGE] = second }
     }
